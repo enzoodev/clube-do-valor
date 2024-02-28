@@ -1,10 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export const Dashboard: React.FC = () => {
-  return (
-    <div>
-      Dashboard
-    </div>
-  )
+  return <div>Dashboard</div>;
 };
-;
