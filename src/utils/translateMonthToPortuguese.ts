@@ -22,6 +22,5 @@ export const translateMonthToPortuguese = (stringDate: string) => {
   const date = new Date(year, month, day);
   const monthNumber = date.getMonth();
   const translatedMonth = monthsInPortuguese[monthNumber];
-
   return translatedMonth;
 };

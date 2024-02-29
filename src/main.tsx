@@ -4,8 +4,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { Dashboard } from '@pages/Dashboard.tsx';
 import { store } from '@store/index';
+
+import { Dashboard } from '@pages/Dashboard.tsx';
+import { NotFoundPage } from '@pages/NotFoundPage';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
@@ -14,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Dashboard />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);
 

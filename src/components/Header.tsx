@@ -1,30 +1,57 @@
-import React from 'react';
-import Logo from '@assets/logo.svg';
-import { Bars3CenterLeftIcon, BellIcon } from '@heroicons/react/24/solid';
+import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { Bars3CenterLeftIcon, BellIcon } from '@heroicons/react/24/solid';
+
+import Logo from '@assets/logo.svg';
 
 export const Header: React.FC = () => {
+  const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+
+  const handleNavigate = useCallback(() => {
+    navigate(searchText);
+  }, [navigate, searchText]);
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> =
+    useCallback((event) => {
+      setSearchText(event.target.value);
+    }, []);
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
+    useCallback(
+      (event) => {
+        if (event.key === 'Enter') {
+          handleNavigate();
+        }
+      },
+      [handleNavigate],
+    );
+
+  const handleGoBack = useCallback(() => {
+    navigate('./');
+  }, [navigate]);
+
   return (
     <header className="w-full flex items-center justify-between gap-6 py-3 px-5 border-b border-[#E5E7EB]">
       <div className="w-full flex items-center gap-6">
-        <a
-          className="hidden sm:flex"
-          href="https://clubedovalor.com.br/"
-          target="_blank"
-        >
-          <img
-            src={Logo}
-            alt="clube-do-valor-logo"
-            className="w-11 h-11 cursor-pointer"
-          />
-        </a>
+        <img
+          src={Logo}
+          onClick={handleGoBack}
+          alt="clube-do-valor-logo"
+          className="w-11 h-11 cursor-pointer hidden sm:flex"
+        />
         <div className="hidden md:flex">
-          <div className="flex items-center bg-[#F9FAFB] gap-2.5 w-full max-w-96 rounded-2xl border border-[#E5E7EB] px-3.5 h-11">
+          <div className="flex items-center bg-[#F9FAFB] gap-2.5 w-96 rounded-2xl border border-[#E5E7EB] px-3.5 h-11">
             <MagnifyingGlassIcon className="h-5 w-5 text-[##6B7280]" />
             <input
               placeholder="Pesquisar"
               type="text"
               className="w-full rounded-2xl h-full bg-[#F9FAFB]"
+              value={searchText}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
           </div>
         </div>

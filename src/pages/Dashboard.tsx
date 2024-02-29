@@ -10,6 +10,8 @@ import { Transactions } from '@components/Dashboard/Transactions';
 import { AdvisorSummary } from '@components/Dashboard/AdvisorSummary';
 import { PortfoliosByBrokerChart } from '@components/Dashboard/PortfoliosByBrokerChart';
 import { EvoluationOfAssets } from '@components/Dashboard/EvoluationOfAssets';
+import { AssetsByBrokerChart } from '@components/Dashboard/AssetsByBroker';
+import { SideBar } from '@components/SideBar';
 
 export const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +32,13 @@ export const Dashboard: React.FC = () => {
     <div>
       <Header />
       <div className="w-full flex flex-row">
-        <main className="w-full h-screen flex flex-col p-4 gap-4 bg-gray-50">
+        <SideBar />
+        <main className="w-full flex flex-col p-4 gap-4 bg-gray-50">
           <AdvisorSummary />
           <EvoluationOfAssets />
-          <div className="w-full flex flex-col md:flex-row gap-4">
+          <div className="w-full flex flex-col lg:flex-row gap-4">
             <PortfoliosByBrokerChart />
+            <AssetsByBrokerChart />
           </div>
           <Transactions />
         </main>

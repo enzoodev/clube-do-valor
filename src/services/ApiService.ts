@@ -71,26 +71,26 @@ export class ApiService {
     dashboardData: DashboardDTO,
   ): DashboardClientLatestFormattedTransaction[] {
     const clients = dashboardData.data.clients_summary;
-    const filteredClients = clients.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase()),
-    );
 
-    const formattedTransactions: DashboardClientLatestFormattedTransaction[] =
-      [];
-    filteredClients.forEach((transaction) => {
-      if (transaction.latest_transactions.length > 0) {
-        const latestTransaction = transaction.latest_transactions[0];
-        formattedTransactions.push({
-          clientName: transaction.name,
-          date: latestTransaction.date,
-          value: latestTransaction.value,
-          type: latestTransaction.type,
-        });
-      }
-    });
+    const index = clients.findIndex((item) => item.name === search);
 
-    return formattedTransactions;
+    if (index === -1) {
+      return dashboardData.data.clients_summary.flatMap((client) =>
+        client.latest_transactions.map((item) => ({
+          ...item,
+          clientName: client.name,
+        })),
+      );
+    }
+
+    const client = clients[index];
+
+    return client.latest_transactions.map((item) => ({
+      ...item,
+      clientName: client.name,
+    }));
   }
+
   public static async fetchClientTransactions(
     search: string,
   ): Promise<DashboardClientLatestFormattedTransaction[]> {

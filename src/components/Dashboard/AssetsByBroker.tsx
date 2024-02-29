@@ -10,12 +10,12 @@ import {
   Legend,
 } from 'chart.js';
 import { useAppSelector } from '@hooks/useAppSelector';
-import { selectPortfoliosByBroker } from '@features/dashboard';
+import { selectAssetsByBroker } from '@features/dashboard';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-export const PortfoliosByBrokerChart: React.FC = () => {
-  const portfolios = useAppSelector(selectPortfoliosByBroker);
+export const AssetsByBrokerChart: React.FC = () => {
+  const assets = useAppSelector(selectAssetsByBroker);
 
   return (
     <div className="flex-1 flex h-96 w-full flex flex-col gap-7 rounded-2xl p-6 bg-[#FFF] drop-shadow">

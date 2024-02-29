@@ -12,7 +12,7 @@ export const AdvisorSummary: React.FC = () => {
   const advisor = useAppSelector(selectDashboardAdvisorSummary);
 
   return (
-    <div className="w-full flex flex-col md:flex-row md:h-32 lg:h-28 gap-4">
+    <div className="w-full flex flex-col lg:flex-row lg:h-32 gap-4">
       <InfoCard
         title="Clientes"
         subtitle={advisor.client_count.toString()}
@@ -25,7 +25,7 @@ export const AdvisorSummary: React.FC = () => {
       />
       <InfoCard
         title="Patrimônio Médio"
-        subtitle={formatValueLabel(advisor.total_equity)}
+        subtitle={formatValueLabel(advisor.average_equity)}
         current={-5}
       />
     </div>

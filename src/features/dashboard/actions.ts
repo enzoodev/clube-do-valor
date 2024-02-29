@@ -12,8 +12,13 @@ export const fetchDashboard = createAsyncThunk(
 
 export const fetchClientTransactions = createAsyncThunk(
   'dashboard/fetchClientTransactions',
-  async (search: string) => {
+  async ({ search, reset }: { search: string; reset?: boolean }) => {
     const data = await ApiService.fetchClientTransactions(search);
+
+    if (reset) {
+      return data.slice(0, 6);
+    }
+
     return data;
   },
 );
