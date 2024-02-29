@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '@assets/logo.svg';
 import { Bars3CenterLeftIcon, BellIcon } from '@heroicons/react/24/solid';
-import { SearchInput } from './SearchInput';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export const Header: React.FC = () => {
   return (
@@ -19,7 +19,14 @@ export const Header: React.FC = () => {
           />
         </a>
         <div className="hidden md:flex">
-          <SearchInput />
+          <div className="flex items-center bg-[#F9FAFB] gap-2.5 w-full max-w-96 rounded-2xl border border-[#E5E7EB] px-3.5 h-11">
+            <MagnifyingGlassIcon className="h-5 w-5 text-[##6B7280]" />
+            <input
+              placeholder="Pesquisar"
+              type="text"
+              className="w-full rounded-2xl h-full bg-[#F9FAFB]"
+            />
+          </div>
         </div>
         <Bars3CenterLeftIcon
           onClick={() => console.log('test')}
