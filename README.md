@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
+![Logo](https://bitbucket.org/gestora-clube-do-valor/teste-frontend/raw/628c2b4836d6de38acaeaba9143c653dcedf78db/logo.png)
+# Clube-do-valor &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Installing / Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```yarn``` to install dependencies and
+```yarn dev```to run the project
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Built With
+React, Vite, Redux, Tailwind and TypeScript
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
+setup nodejs
+https://nodejs.org/en
+  and yarn
+https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Configuration
+
+install ESlint and prettier extensions
+
+
+## Api Reference
+
+exibir dados reais obtidos a partir da API https://run.mocky.io/v3/d4a79840-93c0-4297-80bb-108c279377a3
+
+
