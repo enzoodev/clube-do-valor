@@ -1,16 +1,18 @@
 import {
-  DashboardClientLatestTransaction,
+  DashboardClientLatestFormattedTransaction,
   DashboardDTO,
-} from '@dtos/dashboard';
+} from '@features/dashboard/types';
 
 export class ApiService {
-  private baseURL =
+  private static baseURL =
     'https://run.mocky.io/v3/d4a79840-93c0-4297-80bb-108c279377a3';
 
-  private defaultErrorMessage =
+  private static defaultErrorMessage =
     'Ocorreu um erro, por favor tente novamente mais tarde.';
 
-  private async request(): Promise<DashboardDTO> {
+  private static transactionsForPage = 6;
+
+  private static async request(): Promise<DashboardDTO> {
     const response = await fetch(this.baseURL);
 
     if (!response.ok) {
@@ -21,58 +23,79 @@ export class ApiService {
     return data;
   }
 
-  async fetch(): Promise<DashboardDTO> {
+  public static async fetch(): Promise<DashboardDTO> {
     const requestData = await this.request();
     return requestData;
   }
 
-  private paginateData(
+  private static paginateTransactions(
     page: number,
-    dashboardData: DashboardDTO,
-  ): DashboardClientLatestTransaction[] {
-    const clients = dashboardData.data.clients_summary;
-    const transactions: DashboardClientLatestTransaction[] = [];
+    data: DashboardDTO,
+  ): DashboardClientLatestFormattedTransaction[] {
+    const clientsSummaryItems = data.data.clients_summary;
+    const startIndex = (page - 1) * this.transactionsForPage;
+    const endIndex = startIndex + this.transactionsForPage;
+    const paginatedTransactions = clientsSummaryItems.slice(
+      startIndex,
+      endIndex,
+    );
 
-    clients.forEach((client) => {
-      const clientTransactions = client.latest_transactions;
-      const startIndex = (page - 1) * 10;
-      const endIndex = startIndex + 10;
-      transactions.push(...clientTransactions.slice(startIndex, endIndex));
+    const formattedTransactions: DashboardClientLatestFormattedTransaction[] =
+      [];
+    paginatedTransactions.forEach((transaction) => {
+      if (transaction.latest_transactions.length > 0) {
+        const latestTransaction = transaction.latest_transactions[0];
+        formattedTransactions.push({
+          clientName: transaction.name,
+          date: latestTransaction.date,
+          value: latestTransaction.value,
+          type: latestTransaction.type,
+        });
+      }
     });
 
-    return transactions;
+    return formattedTransactions;
   }
 
-  async fetchPaginated(
+  public static async fetchPaginatedTransactions(
     page: number,
-  ): Promise<DashboardClientLatestTransaction[]> {
+  ): Promise<DashboardClientLatestFormattedTransaction[]> {
     const requestData = await this.request();
-    const paginateData = this.paginateData(page, requestData);
+    const paginatedTransactions = this.paginateTransactions(page, requestData);
 
-    return paginateData;
+    return paginatedTransactions;
   }
 
-  private searchData(
+  private static searchClientTransactions(
     search: string,
     dashboardData: DashboardDTO,
-  ): DashboardClientLatestTransaction[] {
+  ): DashboardClientLatestFormattedTransaction[] {
     const clients = dashboardData.data.clients_summary;
-    const index = clients.findIndex((item) =>
+    const filteredClients = clients.filter((item) =>
       item.name.toLowerCase().includes(search.toLowerCase()),
     );
 
-    if (index === -1) {
-      return [];
-    }
+    const formattedTransactions: DashboardClientLatestFormattedTransaction[] =
+      [];
+    filteredClients.forEach((transaction) => {
+      if (transaction.latest_transactions.length > 0) {
+        const latestTransaction = transaction.latest_transactions[0];
+        formattedTransactions.push({
+          clientName: transaction.name,
+          date: latestTransaction.date,
+          value: latestTransaction.value,
+          type: latestTransaction.type,
+        });
+      }
+    });
 
-    return clients[index].latest_transactions;
+    return formattedTransactions;
   }
-
-  async fetchSearching(
+  public static async fetchClientTransactions(
     search: string,
-  ): Promise<DashboardClientLatestTransaction[]> {
+  ): Promise<DashboardClientLatestFormattedTransaction[]> {
     const requestData = await this.request();
-    const searchData = this.searchData(search, requestData);
+    const searchData = this.searchClientTransactions(search, requestData);
 
     return searchData;
   }
